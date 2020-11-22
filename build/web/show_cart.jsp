@@ -47,6 +47,7 @@
                    out.println("<td> "+ cart.getPrice() + "</td>");
                    out.println("<td> "+ cart.getQuantity() + "</td>");
                    out.println("<td><input type='submit' value='Remove'/></td>");
+                   out.println("<td><input type='submit' value='TEST'/></td>");
                    out.println("<tr>");
                }
           %>
