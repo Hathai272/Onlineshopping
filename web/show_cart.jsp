@@ -20,8 +20,8 @@
      <jsp:useBean id="cart" class="model.Cart" scope="request"/>
       <%
                        
-            List<Cart> empList = CartTable.findYourCart();
-            Iterator<Cart> itr = empList.iterator();
+            List<Cart> c = CartTable.findYourCart();
+            Iterator<Cart> itr = c.iterator();
             
      %>
     <body>
@@ -43,15 +43,24 @@
                    out.println("<tr>");
                    out.println("<td> "+ cart.getDvdname() + "</td>");
                    out.println("<td> "+ cart.getRate() + "</td>");
-                   out.println("<td> "+ cart.getYee() + "</td>");
+                   out.println("<td> "+ cart.getYe() + "</td>");
                    out.println("<td> "+ cart.getPrice() + "</td>");
                    out.println("<td> "+ cart.getQuantity() + "</td>");
-                   out.println("<td><input type='submit' value='Remove'/></td>");
-                   out.println("<tr>");
-               }
+                                  
           %>
+          
+          <form name="remove" action="RemoveOrderController" method="POST">
+            <input type="hidden" name="id" value="<%=cart.getId()%>" size="10" />
+            <td><input type="submit" value="Remove" name="remove" /></td>
+            <tr></tr>
+          </form>
+         <%}%>
+         
     </table>
-    <a href="index.html">Back to Menu</a>
+        <form name="checkout" action="CheckoutOrderController" method="POST">
+            <td><input type="submit" value="Checkout" name="checkout" /></td>
+        </form>
+        <a href="index.html">Back to Menu</a>
  </center>
     </body>
 </html>

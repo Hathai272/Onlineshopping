@@ -6,6 +6,7 @@
 package model;
 
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -21,9 +22,9 @@ public class CartTable {
     public static List<Cart> findYourCart() {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingPU");
      EntityManager em = emf.createEntityManager();
-     List<Cart> empList = null;
+     List<Cart> cartList = null;
      try {
-            empList = (List<Cart>) em.createNamedQuery("Cart.findAll").getResultList();         
+            cartList = (List<Cart>) em.createNamedQuery("Cart.findAll").getResultList();         
         } catch (Exception e) {
             throw new RuntimeException(e);
             
@@ -32,9 +33,25 @@ public class CartTable {
             em.close();
             emf.close();
         }
-        return empList;
+        return cartList;
              
 }
+    
+    public static Cart findOrderbyId(int id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingPU");
+        EntityManager em = emf.createEntityManager();
+        Cart cart = null;
+        try {
+            cart = em.find(Cart.class, id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            em.close();
+            emf.close();
+        }
+        return cart;
+    }
 
     
 
@@ -52,4 +69,49 @@ public class CartTable {
 //        }
 //    }
     
+     public static int insertProduct(Cart cart) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingPU");
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Cart target = em.find(Cart.class, cart.getId());
+            if (target != null) {
+                return 0;
+            }
+            em.persist(cart);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            
+        }
+        finally {
+            em.close();
+            emf.close();
+        }
+        return 1;
+    }
+     
+     public static int removeProduct(int id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingPU");
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Cart target = em.find(Cart.class, id);
+            if (target == null) {
+                return 0;
+            }
+            em.remove(target);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            
+        }
+        finally {
+            em.close();
+            emf.close();
+        }
+        return 1;
+    }
+
 }
+

@@ -26,10 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Cart.findAll", query = "SELECT c FROM Cart c"),
-    @NamedQuery(name = "Cart.findByOrderId", query = "SELECT c FROM Cart c WHERE c.orderId = :orderId"),
+    @NamedQuery(name = "Cart.findById", query = "SELECT c FROM Cart c WHERE c.id = :id"),
     @NamedQuery(name = "Cart.findByDvdname", query = "SELECT c FROM Cart c WHERE c.dvdname = :dvdname"),
-    @NamedQuery(name = "Cart.findByYee", query = "SELECT c FROM Cart c WHERE c.yee = :yee"),
     @NamedQuery(name = "Cart.findByRate", query = "SELECT c FROM Cart c WHERE c.rate = :rate"),
+    @NamedQuery(name = "Cart.findByYe", query = "SELECT c FROM Cart c WHERE c.ye = :ye"),
     @NamedQuery(name = "Cart.findByPrice", query = "SELECT c FROM Cart c WHERE c.price = :price"),
     @NamedQuery(name = "Cart.findByQuantity", query = "SELECT c FROM Cart c WHERE c.quantity = :quantity")})
 public class Cart implements Serializable {
@@ -38,15 +38,16 @@ public class Cart implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ORDER_ID")
-    private Integer orderId;
+    @Column(name = "ID")
+    private Integer id;
     @Size(max = 80)
     @Column(name = "DVDNAME")
     private String dvdname;
-    @Column(name = "YEE")
-    private Integer yee;
+    @Size(max = 80)
     @Column(name = "RATE")
-    private Integer rate;
+    private String rate;
+    @Column(name = "YE")
+    private Integer ye;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRICE")
     private Double price;
@@ -56,16 +57,16 @@ public class Cart implements Serializable {
     public Cart() {
     }
 
-    public Cart(Integer orderId) {
-        this.orderId = orderId;
+    public Cart(Integer id) {
+        this.id = id;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDvdname() {
@@ -76,20 +77,20 @@ public class Cart implements Serializable {
         this.dvdname = dvdname;
     }
 
-    public Integer getYee() {
-        return yee;
-    }
-
-    public void setYee(Integer yee) {
-        this.yee = yee;
-    }
-
-    public Integer getRate() {
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(Integer rate) {
+    public void setRate(String rate) {
         this.rate = rate;
+    }
+
+    public Integer getYe() {
+        return ye;
+    }
+
+    public void setYe(Integer ye) {
+        this.ye = ye;
     }
 
     public Double getPrice() {
@@ -111,7 +112,7 @@ public class Cart implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (orderId != null ? orderId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -122,7 +123,7 @@ public class Cart implements Serializable {
             return false;
         }
         Cart other = (Cart) object;
-        if ((this.orderId == null && other.orderId != null) || (this.orderId != null && !this.orderId.equals(other.orderId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -130,7 +131,7 @@ public class Cart implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Cart[ orderId=" + orderId + " ]";
+        return "model.Cart[ id=" + id + " ]";
     }
     
 }

@@ -52,4 +52,25 @@ public class DvdcatalogTable {
 //        }
 //    }
     
+      public static int insertProduct(Dvdcatalog emp) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineShoppingPU");
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Dvdcatalog target = em.find(Dvdcatalog.class, emp.getId());
+            if (target != null) {
+                return 0;
+            }
+            em.persist(emp);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            
+        }
+        finally {
+            em.close();
+            emf.close();
+        }
+        return 1;
+    }
 }
