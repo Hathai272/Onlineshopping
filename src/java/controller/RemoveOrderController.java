@@ -36,6 +36,7 @@ public class RemoveOrderController extends HttpServlet {
         throws ServletException, IOException {
         HttpSession session = request.getSession();
         EntityManager em = (EntityManager) session.getAttribute("entitymanager");
+        
         int id = Integer.parseInt(request.getParameter("id"));
         Cart cart = CartTable.findOrderbyId(id);
         session.setAttribute("Cart", cart);
@@ -46,7 +47,7 @@ public class RemoveOrderController extends HttpServlet {
             
         }
         request.setAttribute("rowDeleted", rowDeleted);
-        request.getRequestDispatcher("show_cart.jsp").forward(request, response);
+        request.getRequestDispatcher("remove_order.jsp").forward(request, response);
         
     }
 

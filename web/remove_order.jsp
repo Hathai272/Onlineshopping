@@ -12,7 +12,7 @@
         <title>Add result</title>
     </head>
     <body>
-        <h1><%=request.getAttribute("rowInserted") + " Product is added " %> </h1>
+        <h1><%=request.getAttribute("rowDeleted") + " Product is removed " %> </h1>
         </br>
         <jsp:include page="show_cart.jsp" flush="true" />
     </body>

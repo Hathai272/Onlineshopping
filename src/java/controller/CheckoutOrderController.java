@@ -46,7 +46,7 @@ public class CheckoutOrderController extends HttpServlet {
         double cost = 0;
         while(itr.hasNext()) {  
             cart = itr.next();
-            cost += cart.getQuantity() * cart.getPrice();           
+            cost += cart.getPrice() * cart.getQuantity();           
         }
             
 
